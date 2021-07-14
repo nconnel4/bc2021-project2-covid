@@ -1,1 +1,1 @@
-# bc2021-project3-covid
+# bc2021-project2-covid
