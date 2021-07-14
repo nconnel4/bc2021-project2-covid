@@ -4,6 +4,7 @@ from covidvaccinationproject.util import dataconnector as dc
 
 
 def test_connect_web_json():
-    data = dc.get_data_from_web()
+    url = 'https://covid.ourworldindata.org/data/owid-covid-data.json'
+    data = dc.get_json_from_web(url)
 
     assert data is not None
