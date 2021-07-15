@@ -18,6 +18,7 @@ def connector():
 @pytest.fixture
 def test_table_schema():
     return {'__tablename__': 'test_table',
+            '__table_args__': {'extend_existing': True},
             'test_col_1': Column(Integer, primary_key=True),
             'test_col_2': Column(String)}
 
@@ -94,4 +95,18 @@ class TestTableClass:
         assert results == [(1, 'one'),
                            (2, 'two'),
                            (3, 'three')]
+
+    def test_drop_create(self, connector, test_table_schema):
+        test_table = Table('test_table', connector.engine, test_table_schema)
+
+        test_table.drop_table()
+        test_table.create_table()
+
+        assert inspect(connector.engine).has_table('test_table')
+
+        test_table.drop_table()
+        test_table.create_table()
+
+        assert inspect(connector.engine).has_table('test_table')
+
 
