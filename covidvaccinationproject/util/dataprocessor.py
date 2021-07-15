@@ -1,4 +1,5 @@
 import logging
+import datetime as dt
 
 from covidvaccinationproject.util import dataconnector
 
@@ -33,13 +34,6 @@ def extract_country_list():
             'life_expectancy': value.get('life_expectancy'),
             'human_development_index': value.get('human_development_index')
         }
-
-        # append inner dictionary to id
-
-        # for key, value in value.items():
-        #     if not key == 'data':
-        #         country_info[key] = value
-
         country_list.append(country_info.copy())
 
     return country_list
@@ -54,13 +48,17 @@ def extract_covid_data():
     logger.info('Extracting covid data')
 
     for key, value in JSON_DATA.items():
-        covid_data = {
-            'country_id': key
-        }
 
         for data_point in value['data']:
-            for key, value in data_point.items():
-                covid_data[key] = value
+            covid_data = {
+                'country_id': key,
+                'date': dt.datetime.strptime(data_point.get('date'), '%Y-%m-%d'),
+                'total_cases': data_point.get('total_cases'),
+                'new_cases': data_point.get('new_cases'),
+                'total_cases_per_million': data_point.get('total_cases_per_million'),
+                'new_cases_per_million': data_point.get('new_cases_per_million'),
+                'stringency_index': data_point.get('stringency_index')
+            }
 
             covid_data_list.append(covid_data.copy())
 
