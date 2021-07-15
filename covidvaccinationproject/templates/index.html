@@ -2,9 +2,60 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Covid Data By Country</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
+
 <body>
-<script src="../static/js/example.js"></script>
+
+    <!-- This section separates the webpage into different blocks to place graphs and tables on -->
+    <div class="container">
+        <!-- Title jumbotron on top of page -->
+        <div class="row">
+          <div class="col-md-12 jumbotron text-center">
+            <h1>Covid-19 Infections, Deaths, and Vaccination Percentage By Country</h1>
+            <p>Select a country from the dropdown list to see each one's graphs</p>
+          </div>
+        </div>
+        <!-- Row containing dropdown list and info box -->
+        <div class="row">
+          <div class="col-md-2">
+            <!-- Country list -->
+            <div class="well">
+              <h5>Country:</h5>
+              <select id="selDataset" onchange="optionChanged(this.value)"></select>
+            </div>
+            <!-- Info box -->
+            <div class="panel panel-primary">
+              <div class="panel-heading">
+                <h3 class="panel-title">Country Info</h3>
+              </div>
+              <div id="sample-metadata" class="panel-body"></div>
+            </div>
+          </div>
+          <!-- Deaths graph and vaccination gauge -->
+          <div class="col-md-5">
+            <div id="deaths"></div>
+          </div>
+          <div class="col-md-5">
+            <div id="gauge"></div>
+          </div>
+        </div>
+        <!-- Infections graph -->
+        <div class="row">
+          <div class="col-md-12">
+            <div id="infections"></div>
+          </div>
+        </div>
+    </div>
+
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="../static/js/example.js"></script>
+    <script src="../app.py"></script>
+
 </body>
+
 </html>
