@@ -14,6 +14,7 @@ logging.getLogger('covidvaccinationproject.util.sqlconnector').setLevel(logging.
 def connector():
     return SqlConnector('test.db')
 
+
 @pytest.fixture
 def test_table_schema():
     return {'__tablename__': 'test_table',
@@ -60,20 +61,25 @@ class TestTableClass:
     def test_insert_data(self, connector, test_table_schema):
         test_table = Table('test_table', connector.engine, test_table_schema)
 
+        # drop table and create table to purge data
         test_table.drop_table()
         test_table.create_table()
 
+        # insert single row into test_table
         test_table.insert_data([{
             'test_col_1': 1,
             'test_col_2': 'one'
         }])
 
+        # setup connection to retrieve data
         conn = connector.engine.connect()
         query = test_table.table.select()
         results = conn.execute(query).fetchall()
 
+        # test single inserted row
         assert results == [(1, 'one')]
 
+        # insert multiple records into table
         test_table.insert_data([{
             'test_col_1': 2,
             'test_col_2':  'two'
@@ -84,6 +90,7 @@ class TestTableClass:
 
         results = conn.execute(query).fetchall()
 
+        # test multiple rows appended to table
         assert results == [(1, 'one'),
                            (2, 'two'),
                            (3, 'three')]
