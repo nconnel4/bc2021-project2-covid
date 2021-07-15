@@ -96,7 +96,12 @@ def get_covid_data(country_id=None, start_date=None, end_date = None):
     for data_point in query:
         covid_data_list.append({
             'country_id': data_point[0],
-            'date': data_point[1]
+            'date': data_point[1],
+            'total_cases': data_point[2],
+            'new_cases': data_point[3],
+            'total_cases_per_million': data_point[4],
+            'new_cases_per_million': data_point[5],
+            'stringency': data_point[6]
         })
 
     logger.debug(covid_data_list)
