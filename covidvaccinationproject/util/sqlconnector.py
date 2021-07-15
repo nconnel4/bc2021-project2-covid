@@ -51,6 +51,9 @@ class Table:
 
     def create_table(self):
         """ Creates table if table does not exist in database """
+
+        self._logger.debug('Create State %s', self._table)
+
         if self._table is None:
             table = type('Table', (self._Base, ), self._table_schema)
             table.__table__.create(bind=self._engine)
@@ -61,10 +64,14 @@ class Table:
 
     def drop_table(self):
         """ drops table if exists in database """
+
+        self._logger.debug('Drop State %s', self._table)
+
         if self._table is not None:
-            self._table.drop()
+            self._table.drop(self._engine)
             self._logger.info('%s table dropped', self._table_name)
             self._table = self._reflect_table_metadata()
+
 
     def insert_data(self, data_dict: list):
         """ Inserts data into table. Data is passed as a list of dictionaries """
@@ -76,6 +83,7 @@ class Table:
 
     def _reflect_table_metadata(self):
         """ Reflects database object if exists. Returns None if object does no exist """
+        self._metadata.clear()
         self._metadata.reflect()
         try:
             table = self._metadata.tables[self._table_name]
