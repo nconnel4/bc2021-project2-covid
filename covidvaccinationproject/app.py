@@ -1,4 +1,7 @@
 from flask import Flask, render_template, redirect, jsonify, request
+import sys
+
+sys.path.append("..")
 
 from covidvaccinationproject.util.databasebuilder import build_database
 from covidvaccinationproject.util.webservice import get_country_list, get_country_demographics, get_covid_data
@@ -56,6 +59,7 @@ def covid_filter():
 
 
 if __name__ == "__main__":
+
     app.run(debug=True)
     logconfig.setup_logging()
     build_database()
