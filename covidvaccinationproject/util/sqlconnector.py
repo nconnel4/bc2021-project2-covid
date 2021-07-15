@@ -64,6 +64,7 @@ class Table:
         if self._table is not None:
             self._table.drop()
             self._logger.info('%s table dropped', self._table_name)
+            self._table = self._reflect_table_metadata()
 
     def insert_data(self, data_dict: list):
         """ Inserts data into table. Data is passed as a list of dictionaries """
