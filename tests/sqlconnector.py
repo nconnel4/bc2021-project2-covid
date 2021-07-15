@@ -1,6 +1,6 @@
 import pytest
 import logging
-from sqlalchemy import Column, String, Integer, inspect
+from sqlalchemy import Column, String, Integer, inspect, select
 
 from covidvaccinationproject.util.sqlconnector import SqlConnector, Table
 
@@ -14,30 +14,77 @@ logging.getLogger('covidvaccinationproject.util.sqlconnector').setLevel(logging.
 def connector():
     return SqlConnector('test.db')
 
-
-def test_connect_db():
-    connector = SqlConnector('test.db')
-
-    try:
-        conn = connector._connect_engine()
-        conn.connect()
-        connection_success = True
-    except Exception as ex:
-        connection_success = False
-        print(ex)
-
-    assert connection_success
+@pytest.fixture
+def test_table_schema():
+    return {'__tablename__': 'test_table',
+            'test_col_1': Column(Integer, primary_key=True),
+            'test_col_2': Column(String)}
 
 
-def test_create_table(connector):
-    table_schema = {'__tablename__': 'test_table',
-                    'test_col_1': Column(Integer, primary_key=True),
-                    'test_col_2': Column(String)}
+class TestSqlConnectorClass:
 
-    test_table = Table('test_table', connector.engine, table_schema)
+    def test_connect_db(self):
+        connector = SqlConnector('test.db')
 
-    test_table.create_table()
+        try:
+            conn = connector._connect_engine()
+            conn.connect()
+            connection_success = True
+        except Exception as ex:
+            connection_success = False
+            print(ex)
 
-    assert inspect(connector.engine).has_table('test_table')
+        assert connection_success
 
+
+class TestTableClass:
+    def test_create_table(self, connector, test_table_schema):
+
+        test_table = Table('test_table', connector.engine, test_table_schema)
+
+        test_table.create_table()
+
+        assert inspect(connector.engine).has_table('test_table')
+
+    def test_drop_table(self, connector, test_table_schema):
+        test_table = Table('test_table', connector.engine, test_table_schema)
+
+        # create and verify table is created
+        test_table.create_table()
+        assert inspect(connector.engine).has_table('test_table')
+
+        # test drop function
+        test_table.drop_table()
+        assert not inspect(connector.engine).has_table('test_table')
+
+    def test_insert_data(self, connector, test_table_schema):
+        test_table = Table('test_table', connector.engine, test_table_schema)
+
+        test_table.drop_table()
+        test_table.create_table()
+
+        test_table.insert_data([{
+            'test_col_1': 1,
+            'test_col_2': 'one'
+        }])
+
+        conn = connector.engine.connect()
+        query = test_table.table.select()
+        results = conn.execute(query).fetchall()
+
+        assert results == [(1, 'one')]
+
+        test_table.insert_data([{
+            'test_col_1': 2,
+            'test_col_2':  'two'
+        }, {
+            'test_col_1': 3,
+            'test_col_2': 'three'
+        }])
+
+        results = conn.execute(query).fetchall()
+
+        assert results == [(1, 'one'),
+                           (2, 'two'),
+                           (3, 'three')]
 
