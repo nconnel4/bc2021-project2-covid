@@ -17,15 +17,30 @@ def extract_country_list():
 
     for key, value in JSON_DATA.items():
         country_info = {
-            'country_id': key
+            'country_id': key,
+            'continent': value.get('continent'),
+            'location': value.get('location'),
+            'population': value.get('population'),
+            'population_density': value.get('population_density'),
+            'median_age': value.get('median_age'),
+            'aged_65_older': value.get('aged_65_older'),
+            'aged_70_older': value.get('aged_70_older'),
+            'gdp_per_capita': value.get('gdp_per_capita'),
+            'cardiovasc_death_rate': value.get('cardiovasc_death_rate'),
+            'diabetes_prevalence': value.get('diabetes_prevalence'),
+            'handwashing_facilities': value.get('handwashing_facilities'),
+            'hospital_beds_per_thousand': value.get('hospital_beds_per_thousand'),
+            'life_expectancy': value.get('life_expectancy'),
+            'human_development_index': value.get('human_development_index')
         }
 
         # append inner dictionary to id
-        for key, value in value.items():
-            if not key == 'data':
-                country_info[key] = value
 
-        country_list.append(country_info)
+        # for key, value in value.items():
+        #     if not key == 'data':
+        #         country_info[key] = value
+
+        country_list.append(country_info.copy())
 
     return country_list
 
