@@ -32,7 +32,10 @@ def extract_country_list():
             'handwashing_facilities': value.get('handwashing_facilities'),
             'hospital_beds_per_thousand': value.get('hospital_beds_per_thousand'),
             'life_expectancy': value.get('life_expectancy'),
-            'human_development_index': value.get('human_development_index')
+            'human_development_index': value.get('human_development_index'),
+            'extreme_poverty': value.get('extreme_poverty'),
+            'female_smokers': value.get('female_smokers'),
+            'male_smokers': value.get('male_smokers'),
         }
         country_list.append(country_info.copy())
 
@@ -57,7 +60,44 @@ def extract_covid_data():
                 'new_cases': data_point.get('new_cases'),
                 'total_cases_per_million': data_point.get('total_cases_per_million'),
                 'new_cases_per_million': data_point.get('new_cases_per_million'),
-                'stringency_index': data_point.get('stringency_index')
+                'stringency_index': data_point.get('stringency_index'),
+                'new_cases_smoothed': data_point.get('new_cases_smoothed'),
+                'new_deaths_smoothed': data_point.get('new_deaths_smoothed'),
+                'new_cases_smoothed_per_million': data_point.get('new_cases_smoothed_per_million'),
+                'new_deaths_smoothed_per_million': data_point.get('new_deaths_smoothed_per_million'),
+                'total_deaths': data_point.get('total_deaths'),
+                'new_deaths': data_point.get('new_deaths'),
+                'total_deaths_per_million': data_point.get('total_deaths_per_million'),
+                'new_deaths_per_million': data_point.get('new_deaths_per_million'),
+                'reproduction_rate': data_point.get('reproduction_rate'),
+                'total_vaccinations': data_point.get('total_vaccinations'),
+                'people_vaccinated': data_point.get('people_vaccinated'),
+                'total_vaccinations_per_hundred': data_point.get('total_vaccinations_per_hundred'),
+                'people_vaccinated_per_hundred': data_point.get('people_vaccinated_per_hundred'),
+                'new_vaccinations_smoothed': data_point.get('new_vaccinations_smoothed'),
+                'new_vaccinations_smoothed_per_million': data_point.get('new_vaccinations_smoothed_per_million'),
+                'people_fully_vaccinated': data_point.get('people_fully_vaccinated'),
+                'people_fully_vaccinated_per_hundred': data_point.get('people_fully_vaccinated_per_hundred'),
+                'new_vaccinations': data_point.get('new_vaccinations'),
+                'new_tests': data_point.get('new_tests'),
+                'total_tests': data_point.get('total_tests'),
+                'total_tests_per_thousand': data_point.get('total_tests_per_thousand'),
+                'new_tests_per_thousand': data_point.get('new_tests_per_thousand'),
+                'tests_units': data_point.get('tests_units'),
+                'excess_mortality': data_point.get('excess_mortality'),
+                'new_tests_smoothed': data_point.get('new_tests_smoothed'),
+                'new_tests_smoothed_per_thousand': data_point.get('new_tests_smoothed_per_thousand'),
+                'positive_rate': data_point.get('positive_rate'),
+                'tests_per_case': data_point.get('tests_per_case'),
+                'icu_patients': data_point.get('icu_patients'),
+                'icu_patients_per_million': data_point.get('icu_patients_per_million'),
+                'hosp_patients': data_point.get('hosp_patients'),
+                'hosp_patients_per_million': data_point.get('hosp_patients_per_million'),
+                'weekly_hosp_admissions': data_point.get('weekly_hosp_admissions'),
+                'weekly_hosp_admissions_per_million': data_point.get('weekly_hosp_admissions_per_million'),
+                'weekly_icu_admissions': data_point.get('weekly_icu_admissions'),
+                'weekly_icu_admissions_per_million': data_point.get('weekly_icu_admissions_per_million'),
+
             }
 
             covid_data_list.append(covid_data.copy())

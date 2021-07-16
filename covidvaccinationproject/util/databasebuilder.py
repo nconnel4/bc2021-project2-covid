@@ -33,7 +33,10 @@ def _create_tables(engine):
         'handwashing_facilities': Column(Float),
         'hospital_beds_per_thousand': Column(Float),
         'life_expectancy':Column(Float),
-        'human_development_index': Column(Float)
+        'human_development_index': Column(Float),
+        'male_smokers': Column(Float),
+        'female_smokers': Column(Float),
+        'extreme_poverty': Column(Float)
     }
 
     country = Table('country', engine, country_schema)
@@ -51,7 +54,43 @@ def _create_tables(engine):
         'new_cases': Column(Integer),
         'total_cases_per_million': Column(Float),
         'new_cases_per_million': Column(Float),
-        'stringency_index': Column(Float)
+        'stringency_index': Column(Float),
+        'new_cases_smoothed': Column(Float),
+        'new_deaths_smoothed': Column(Float),
+        'new_cases_smoothed_per_million': Column(Float),
+        'new_deaths_smoothed_per_million': Column(Float),
+        'total_deaths': Column(Float),
+        'new_deaths': Column(Float),
+        'total_deaths_per_million': Column(Float),
+        'new_deaths_per_million': Column(Float),
+        'reproduction_rate': Column(Float),
+        'total_vaccinations': Column(Float),
+        'people_vaccinated': Column(Float),
+        'total_vaccinations_per_hundred': Column(Float),
+        'people_vaccinated_per_hundred': Column(Float),
+        'new_vaccinations_smoothed': Column(Float),
+        'new_vaccinations_smoothed_per_million': Column(Float),
+        'people_fully_vaccinated': Column(Float),
+        'people_fully_vaccinated_per_hundred': Column(Float),
+        'new_vaccinations': Column(Float),
+        'new_tests': Column(Float),
+        'total_tests': Column(Float),
+        'total_tests_per_thousand': Column(Float),
+        'new_tests_per_thousand': Column(Float),
+        'tests_units': Column(String),
+        'excess_mortality': Column(Float),
+        'new_tests_smoothed': Column(Float),
+        'new_tests_smoothed_per_thousand': Column(Float),
+        'positive_rate': Column(Float),
+        'tests_per_case': Column(Float),
+        'icu_patients': Column(Float),
+        'icu_patients_per_million': Column(Float),
+        'hosp_patients': Column(Float),
+        'hosp_patients_per_million': Column(Float),
+        'weekly_hosp_admissions': Column(Float),
+        'weekly_hosp_admissions_per_million': Column(Float),
+        'weekly_icu_admissions': Column(Float),
+        'weekly_icu_admissions_per_million': Column(Float),
     }
 
     covid_data = Table('covid_data', engine, covid_data_schema)
