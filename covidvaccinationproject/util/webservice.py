@@ -63,7 +63,10 @@ def get_country_demographics(country_id=None):
             'handwashing_facilities': country[10],
             'hospital_beads_per_thousand': country[11],
             'life_expectancy': country[12],
-            'human_development_index': country[13]
+            'human_development_index': country[13],
+            'male_smokers': country[14],
+            'female_smokers': country[15],
+            'extreme_poverty': country[16]
         })
 
     logger.debug(country_demo_list)
@@ -101,7 +104,43 @@ def get_covid_data(country_id=None, start_date=None, end_date = None):
             'new_cases': data_point[3],
             'total_cases_per_million': data_point[4],
             'new_cases_per_million': data_point[5],
-            'stringency': data_point[6]
+            'stringency_index': data_point[6],
+            'new_cases_smoothed': data_point[7],
+            'new_deaths_smoothed': data_point[8],
+            'new_cases_smoothed_per_million': data_point[9],
+            'new_deaths_smoothed_per_million': data_point[10],
+            'total_deaths': data_point[11],
+            'new_deaths': data_point[12],
+            'total_deaths_per_million': data_point[13],
+            'new_deaths_per_million': data_point[14],
+            'reproduction_rate': data_point[15],
+            'total_vaccinations': data_point[16],
+            'people_vaccinated': data_point[17],
+            'total_vaccinations_per_hundred': data_point[18],
+            'people_vaccinated_per_hundred': data_point[19],
+            'new_vaccinations_smoothed': data_point[20],
+            'new_vaccinations_smoothed_per_million': data_point[21],
+            'people_fully_vaccinated': data_point[22],
+            'people_fully_vaccinated_per_hundred': data_point[23],
+            'new_vaccinations': data_point[24],
+            'new_tests': data_point[25],
+            'total_tests': data_point[26],
+            'total_tests_per_thousand': data_point[27],
+            'new_tests_per_thousand': data_point[28],
+            'tests_units': data_point[29],
+            'excess_mortality': data_point[30],
+            'new_tests_smoothed': data_point[31],
+            'new_tests_smoothed_per_thousand': data_point[32],
+            'positive_rate': data_point[33],
+            'tests_per_case': data_point[34],
+            'icu_patients': data_point[35],
+            'icu_patients_per_million': data_point[36],
+            'hosp_patients': data_point[37],
+            'hosp_patients_per_million': data_point[38],
+            'weekly_hosp_admissions': data_point[39],
+            'weekly_hosp_admissions_per_million': data_point[40],
+            'weekly_icu_admissions': data_point[41],
+            'weekly_icu_admissions_per_million': data_point[42]
         })
 
     logger.debug(covid_data_list)
