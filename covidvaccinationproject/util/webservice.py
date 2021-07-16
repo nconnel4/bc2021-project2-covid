@@ -44,7 +44,7 @@ def get_country_demographics(country_id=None):
     session = Sesssion()
 
     if country_id:
-        query = session.query(country_table.table).where(country_table.table.c.country_id == country_id)
+        query = session.query(country_table.table).filter(country_table.table.c.country_id == country_id)
     else:
         query = session.query(country_table.table)
 
@@ -87,11 +87,11 @@ def get_covid_data(country_id=None, start_date=None, end_date = None):
     query = session.query(covid_table.table)
 
     if country_id:
-        query = query.where(covid_table.table.c.country_id == country_id)
+        query = query.filter(covid_table.table.c.country_id == country_id)
     if start_date:
-        query = query.where(covid_table.table.c.date >= start_date)
+        query = query.filter(covid_table.table.c.date >= start_date)
     if end_date:
-        query = query.where(covid_table.table.c.date <= end_date)
+        query = query.filter(covid_table.table.c.date <= end_date)
 
     for data_point in query:
         covid_data_list.append({
