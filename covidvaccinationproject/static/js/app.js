@@ -76,11 +76,33 @@ function optionChanged(value){
     // Delete text in box to create new text
     document.getElementById("sample-metadata").innerHTML = "";
     // Get values of data
-    idMatch = value;
+    currentId = value;
+    // Get last index of ID
+    var currentId = document.getElementById("selDataset").value;
+    index = countryIdDaily.lastIndexOf(currentId)
     // Match country name to country ID
-    nameMatch = countryNames[countryId.indexOf(idMatch)];
+    nameMatch = countryNames[countryId.indexOf(currentId)];
+    // Metadata for current day for the selected option on the list
+    var currentDate = date[index]
+    var currentCases = totalCases[index]
+    var currentDeaths = totalDeaths[index]
+    var currentVaccinations = totalVaccinations[index]
+    // Turn any null values to 0
+    if(currentCases == null){
+        currentCases = 0
+    }
+    if(currentDeaths == null){
+        currentDeaths = 0
+    }
+    if(currentVaccinations == null){
+        currentVaccinations = 0
+    }
     // Enter data into text box
     let ele = document.getElementById("sample-metadata");
     ele.innerHTML += nameMatch + "<br />";
-    ele.innerHTML += idMatch + "<br />";
+    ele.innerHTML += currentId + "<br />";
+    ele.innerHTML += "Date: " + currentDate + "<br />";
+    ele.innerHTML += "Covid Cases: " + currentCases + "<br />";
+    ele.innerHTML += "Total Deaths: " + currentDeaths + "<br />";
+    ele.innerHTML += "Total Vaccinations: " + currentVaccinations + "<br />";
 }
