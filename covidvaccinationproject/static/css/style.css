@@ -5,3 +5,10 @@
 .panel {
     width: 275px
 }
+
+.jumbotron {
+    overflow: hidden;
+    background-image: url("../../images/covid.png");
+    background-color: rgba(255,255,255,0.4);
+    background-blend-mode: lighten;
+}
