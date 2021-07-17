@@ -1,5 +1,6 @@
 import pytest
 import logging
+import datetime as dt
 
 from covidvaccinationproject.util import dataprocessor as dp
 
@@ -19,5 +20,5 @@ def test_country_list():
 def test_covid_data():
     covid_data = dp.extract_covid_data()
 
-    assert covid_data[0]['date'] == '2020-02-24'
+    assert covid_data[0]['date'] == dt.datetime(2020, 2, 24)
     assert len(covid_data) > 100000
