@@ -47,7 +47,7 @@ fetch(urlData)
         var defaultId = document.getElementById("selDataset").value;
         index = countryIdDaily.lastIndexOf(defaultId)
         // Default metadata for current day for the default option on the list
-        var defaultCurrentDate = date[index]
+        var defaultCurrentDate = formatDate(new Date(date[index]))
         var defaultCurrentCases = totalCases[index]
         var defaultCurrentDeaths = totalDeaths[index]
         var defaultCurrentVaccinations = totalVaccinations[index]
@@ -83,7 +83,7 @@ function optionChanged(value){
     // Match country name to country ID
     nameMatch = countryNames[countryId.indexOf(currentId)];
     // Metadata for current day for the selected option on the list
-    var currentDate = date[index]
+    var currentDate = formatDate(new Date(date[index]))
     var currentCases = totalCases[index]
     var currentDeaths = totalDeaths[index]
     var currentVaccinations = totalVaccinations[index]
@@ -105,4 +105,12 @@ function optionChanged(value){
     ele.innerHTML += "Covid Cases: " + currentCases + "<br />";
     ele.innerHTML += "Total Deaths: " + currentDeaths + "<br />";
     ele.innerHTML += "Total Vaccinations: " + currentVaccinations + "<br />";
+}
+
+// Function to format the date into month/day/year
+function formatDate(date){
+    var year = date.getFullYear()
+    var month = (1 + date.getMonth()).toString()
+    var day = date.getDate()
+    return month + "/" + day + "/" + year
 }
