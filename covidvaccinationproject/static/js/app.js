@@ -22,7 +22,7 @@ fetch(urlCountry)
 
         // Default metadata for the first option on the list
         var defaultId = document.getElementById("selDataset").value;
-        var defaultName = countryNames[countryId.indexOf(defaultId)];
+        var defaultName = countryNames[countryId.indexOf(defaultId)]; 
         // Enter data into text box
         let ele = document.getElementById("sample-metadata");
         ele.innerHTML += defaultName + "<br />";
@@ -43,7 +43,19 @@ fetch(urlData)
         totalCases = data.map(obj => obj.total_cases)
         totalDeaths = data.map(obj => obj.total_deaths)
         totalVaccinations = data.map(obj => obj.total_vaccinations)
-
+        // Get last index of default ID
+        index = countryIdDaily.lastIndexOf(defaultId)
+        // Default metadata for current day for the default option on the list
+        var defaultCurrentDate = date[index]
+        var defaultCurrentCases = totalCases[index]
+        var defaultCurrentDeaths = totalDeaths[index]
+        var defaultCurrentVaccinations = totalVaccinations[index]
+        // Enter data into text box
+        let ele = document.getElementById("sample-metadata");
+        ele.innerHTML += defaultCurrentDate + "<br />";
+        ele.innerHTML += defaultCurrentCases + "<br />";
+        ele.innerHTML += defaultCurrentDeaths + "<br />";
+        ele.innerHTML += defaultCurrentVaccinations + "<br />";
     })
 
 // COUNTRY SELECTION CHANGED SECTION
