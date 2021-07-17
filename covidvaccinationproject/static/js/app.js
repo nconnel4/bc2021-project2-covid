@@ -1,8 +1,8 @@
-// Country names and ID section
+// COUNTRY NAMES AND ID SECTION
 
 // URL to get dictionary of country codes and country codes
 var urlCountry = 'http://127.0.0.1:5000/data/countrylist'
-// JSON saved as a variable
+// JSON fetch. File is each country and their corresponding code
 fetch(urlCountry)
     .then(response => response.json())
     .then(data => {
@@ -29,21 +29,24 @@ fetch(urlCountry)
         ele.innerHTML += defaultId + "<br />";
     })
 
-// Covid data section
+// COVID DATA SECTION
 
 // URL to get daily covid data for each country
 var urlData = `http://127.0.0.1:5000/data/coviddata`
-// JSON saved as a variable
+// JSON fetch. File is of every countries data per day
 fetch(urlData)
     .then(response => response.json())
     .then(data => {
         // Variables
-        countryId = data.map(obj => obj.country_id)
+        countryIdDaily = data.map(obj => obj.country_id)
         date = data.map(obj => obj.date)
         totalCases = data.map(obj => obj.total_cases)
-        
+        totalDeaths = data.map(obj => obj.total_deaths)
+        totalVaccinations = data.map(obj => obj.total_vaccinations)
 
     })
+
+// COUNTRY SELECTION CHANGED SECTION
 
 // Function to run whenever an option is changed
 function optionChanged(value){
@@ -52,9 +55,9 @@ function optionChanged(value){
     // Get values of data
     idMatch = value;
     // Match country name to country ID
-    // nameMatch = countryNames;
+    nameMatch = countryNames[countryId.indexOf(idMatch)];
     // Enter data into text box
     let ele = document.getElementById("sample-metadata");
-    // ele.innerHTML += nameMatch + "<br />";
+    ele.innerHTML += nameMatch + "<br />";
     ele.innerHTML += idMatch + "<br />";
 }
