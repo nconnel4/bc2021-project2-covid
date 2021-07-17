@@ -46,18 +46,18 @@ class TestTableClass:
 
         test_table.create_table()
 
-        assert inspect(connector.engine).has_table('test_table')
+        assert connector.engine.has_table('test_table')
 
     def test_drop_table(self, connector, test_table_schema):
         test_table = Table('test_table', connector.engine, test_table_schema)
 
         # create and verify table is created
         test_table.create_table()
-        assert inspect(connector.engine).has_table('test_table')
+        assert connector.engine.has_table('test_table')
 
         # test drop function
         test_table.drop_table()
-        assert not inspect(connector.engine).has_table('test_table')
+        assert not connector.engine.has_table('test_table')
 
     def test_insert_data(self, connector, test_table_schema):
         test_table = Table('test_table', connector.engine, test_table_schema)
@@ -102,11 +102,11 @@ class TestTableClass:
         test_table.drop_table()
         test_table.create_table()
 
-        assert inspect(connector.engine).has_table('test_table')
+        assert connector.engine.has_table('test_table')
 
         test_table.drop_table()
         test_table.create_table()
 
-        assert inspect(connector.engine).has_table('test_table')
+        assert connector.engine.has_table('test_table')
 
 
