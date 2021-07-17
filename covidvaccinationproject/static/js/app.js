@@ -29,6 +29,25 @@ fetch(urlCountry)
         ele.innerHTML += defaultId + "<br />";
     })
 
+// COUNTRY POPULATION SECTION
+
+// URL to get current population for each country
+var urlPopulation = `http://127.0.0.1:5000/data/countrydemo`
+// JSON fetch. File is of every countries data per day
+fetch(urlPopulation)
+    .then(response => response.json())
+    .then(data => {
+        // Variables
+        countryPopulation = data.map(obj => obj.population)
+        // countryId = data.map(obj => obj.country_id)
+        // Default metadata for the first option on the list
+        var defaultId = document.getElementById("selDataset").value;
+        var defaultPopulation = countryPopulation[countryId.indexOf(defaultId)]; 
+        // Enter data into text box
+        let ele = document.getElementById("sample-metadata");
+        ele.innerHTML += "Population: " + defaultPopulation + "<br />";
+    })
+
 // COVID DATA SECTION
 
 // URL to get daily covid data for each country
@@ -80,8 +99,9 @@ function optionChanged(value){
     // Get last index of ID
     var currentId = document.getElementById("selDataset").value;
     index = countryIdDaily.lastIndexOf(currentId)
-    // Match country name to country ID
+    // Match country name and population to country ID
     nameMatch = countryNames[countryId.indexOf(currentId)];
+    currentPopulation = countryPopulation[countryId.indexOf(currentId)]
     // Metadata for current day for the selected option on the list
     var currentDate = formatDate(new Date(date[index]))
     var currentCases = totalCases[index]
@@ -101,6 +121,7 @@ function optionChanged(value){
     let ele = document.getElementById("sample-metadata");
     ele.innerHTML += nameMatch + "<br />";
     ele.innerHTML += currentId + "<br />";
+    ele.innerHTML += "Population: " + currentPopulation + "<br />";
     ele.innerHTML += "Date: " + currentDate + "<br />";
     ele.innerHTML += "Covid Cases: " + currentCases + "<br />";
     ele.innerHTML += "Total Deaths: " + currentDeaths + "<br />";
