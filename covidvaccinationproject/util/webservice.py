@@ -1,4 +1,4 @@
-from sqlalchemy import select
+from sqlalchemy import select, func, and_
 from sqlalchemy.orm import sessionmaker
 import logging
 import datetime as dt
@@ -76,7 +76,7 @@ def get_country_demographics(country_id=None):
     return country_demo_list
 
 
-def get_covid_data(country_id=None, start_date=None, end_date = None):
+def get_covid_data(country_id=None, start_date=None, end_date=None, most_recent=None):
     logger = logging.getLogger(__name__)
 
     conn = SqlConnector('covid.db')
@@ -95,6 +95,12 @@ def get_covid_data(country_id=None, start_date=None, end_date = None):
         query = query.filter(covid_table.table.c.date >= start_date)
     if end_date:
         query = query.filter(covid_table.table.c.date <= end_date)
+
+    if most_recent:
+        sub_query = query.add_columns(func.max(covid_table.table.c.date).label('most_recent_date')).\
+            group_by(covid_table.table.c.country_id).subquery()
+
+        query = query.join(sub_query, and_(covid_table.table.c.date == sub_query.c.most_recent_date, covid_table.table.c.country_id == sub_query.c.country_id))
 
     for data_point in query:
         covid_data_list.append({
