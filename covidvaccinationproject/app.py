@@ -45,6 +45,7 @@ def covid_filter():
     country_id = query_parameters.get('id')
     start_date = query_parameters.get('start_date')
     end_date = query_parameters.get('end_date')
+    most_recent = query_parameters.get('most_recent')
 
     if country_id:
         param_dict['country_id'] = country_id
@@ -52,6 +53,8 @@ def covid_filter():
         param_dict['start_date'] = start_date
     if end_date:
         param_dict['end_date'] = end_date
+    if most_recent:
+        param_dict['most_recent'] = most_recent
 
     results = get_covid_data(**param_dict)
 
