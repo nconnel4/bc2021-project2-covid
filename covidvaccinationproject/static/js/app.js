@@ -51,12 +51,22 @@ fetch(urlData)
         var defaultCurrentCases = totalCases[index]
         var defaultCurrentDeaths = totalDeaths[index]
         var defaultCurrentVaccinations = totalVaccinations[index]
+        // Turn any null values to 0
+        if(defaultCurrentCases == null){
+            defaultCurrentCases = 0
+        }
+        if(defaultCurrentDeaths == null){
+            defaultCurrentDeaths = 0
+        }
+        if(defaultCurrentVaccinations == null){
+            defaultCurrentVaccinations = 0
+        }
         // Enter data into text box
         let ele = document.getElementById("sample-metadata");
-        ele.innerHTML += "Date:" + defaultCurrentDate + "<br />";
-        ele.innerHTML += "Covid Cases:" + defaultCurrentCases + "<br />";
-        ele.innerHTML += "Total Deaths:" + defaultCurrentDeaths + "<br />";
-        ele.innerHTML += "Total Vaccinations:" + defaultCurrentVaccinations + "<br />";
+        ele.innerHTML += "Date: " + defaultCurrentDate + "<br />";
+        ele.innerHTML += "Covid Cases: " + defaultCurrentCases + "<br />";
+        ele.innerHTML += "Total Deaths: " + defaultCurrentDeaths + "<br />";
+        ele.innerHTML += "Total Vaccinations: " + defaultCurrentVaccinations + "<br />";
     })
 
 // COUNTRY SELECTION CHANGED SECTION
