@@ -22,7 +22,7 @@ fetch(urlCountry)
 
         // Default metadata for the first option on the list
         var defaultId = document.getElementById("selDataset").value;
-        var defaultName = countryNames[countryId.indexOf(defaultId)];
+        var defaultName = countryNames[countryId.indexOf(defaultId)]; 
         // Enter data into text box
         let ele = document.getElementById("sample-metadata");
         ele.innerHTML += defaultName + "<br />";
@@ -43,7 +43,30 @@ fetch(urlData)
         totalCases = data.map(obj => obj.total_cases)
         totalDeaths = data.map(obj => obj.total_deaths)
         totalVaccinations = data.map(obj => obj.total_vaccinations)
-
+        // Get last index of default ID
+        var defaultId = document.getElementById("selDataset").value;
+        index = countryIdDaily.lastIndexOf(defaultId)
+        // Default metadata for current day for the default option on the list
+        var defaultCurrentDate = date[index]
+        var defaultCurrentCases = totalCases[index]
+        var defaultCurrentDeaths = totalDeaths[index]
+        var defaultCurrentVaccinations = totalVaccinations[index]
+        // Turn any null values to 0
+        if(defaultCurrentCases == null){
+            defaultCurrentCases = 0
+        }
+        if(defaultCurrentDeaths == null){
+            defaultCurrentDeaths = 0
+        }
+        if(defaultCurrentVaccinations == null){
+            defaultCurrentVaccinations = 0
+        }
+        // Enter data into text box
+        let ele = document.getElementById("sample-metadata");
+        ele.innerHTML += "Date: " + defaultCurrentDate + "<br />";
+        ele.innerHTML += "Covid Cases: " + defaultCurrentCases + "<br />";
+        ele.innerHTML += "Total Deaths: " + defaultCurrentDeaths + "<br />";
+        ele.innerHTML += "Total Vaccinations: " + defaultCurrentVaccinations + "<br />";
     })
 
 // COUNTRY SELECTION CHANGED SECTION
@@ -53,11 +76,33 @@ function optionChanged(value){
     // Delete text in box to create new text
     document.getElementById("sample-metadata").innerHTML = "";
     // Get values of data
-    idMatch = value;
+    currentId = value;
+    // Get last index of ID
+    var currentId = document.getElementById("selDataset").value;
+    index = countryIdDaily.lastIndexOf(currentId)
     // Match country name to country ID
-    nameMatch = countryNames[countryId.indexOf(idMatch)];
+    nameMatch = countryNames[countryId.indexOf(currentId)];
+    // Metadata for current day for the selected option on the list
+    var currentDate = date[index]
+    var currentCases = totalCases[index]
+    var currentDeaths = totalDeaths[index]
+    var currentVaccinations = totalVaccinations[index]
+    // Turn any null values to 0
+    if(currentCases == null){
+        currentCases = 0
+    }
+    if(currentDeaths == null){
+        currentDeaths = 0
+    }
+    if(currentVaccinations == null){
+        currentVaccinations = 0
+    }
     // Enter data into text box
     let ele = document.getElementById("sample-metadata");
     ele.innerHTML += nameMatch + "<br />";
-    ele.innerHTML += idMatch + "<br />";
+    ele.innerHTML += currentId + "<br />";
+    ele.innerHTML += "Date: " + currentDate + "<br />";
+    ele.innerHTML += "Covid Cases: " + currentCases + "<br />";
+    ele.innerHTML += "Total Deaths: " + currentDeaths + "<br />";
+    ele.innerHTML += "Total Vaccinations: " + currentVaccinations + "<br />";
 }
