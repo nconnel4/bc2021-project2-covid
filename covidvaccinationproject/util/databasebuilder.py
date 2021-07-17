@@ -6,7 +6,7 @@ from covidvaccinationproject.util import dataprocessor
 from covidvaccinationproject.util.sqlconnector import Table, SqlConnector
 
 
-from sqlalchemy import Integer, DateTime, String, Float, Column, PrimaryKeyConstraint
+from sqlalchemy import Integer, DateTime, String, Float, Column, PrimaryKeyConstraint, Index
 
 
 def _create_database():
@@ -18,7 +18,9 @@ def _create_database():
 def _create_tables(engine):
     country_schema = {
         '__tablename__': 'country',
-        '__table_args__': {'extend_existing': True},
+        '__table_args__': (Index('ix_country_location_country_id', 'location', 'country_id'),
+                           {'extend_existing': True},
+                           ),
         'country_id': Column(String, primary_key=True),
         'continent': Column(String, nullable=True),
         'location': Column(String, nullable=True),
@@ -36,7 +38,7 @@ def _create_tables(engine):
         'human_development_index': Column(Float),
         'male_smokers': Column(Float),
         'female_smokers': Column(Float),
-        'extreme_poverty': Column(Float)
+        'extreme_poverty': Column(Float),
     }
 
     country = Table('country', engine, country_schema)
@@ -90,7 +92,8 @@ def _create_tables(engine):
         'weekly_hosp_admissions': Column(Float),
         'weekly_hosp_admissions_per_million': Column(Float),
         'weekly_icu_admissions': Column(Float),
-        'weekly_icu_admissions_per_million': Column(Float),
+        'weekly_icu_admissions_per_million': Column(Float)
+
     }
 
     covid_data = Table('covid_data', engine, covid_data_schema)
