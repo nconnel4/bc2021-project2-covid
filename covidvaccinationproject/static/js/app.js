@@ -44,6 +44,7 @@ fetch(urlData)
         totalDeaths = data.map(obj => obj.total_deaths)
         totalVaccinations = data.map(obj => obj.total_vaccinations)
         // Get last index of default ID
+        var defaultId = document.getElementById("selDataset").value;
         index = countryIdDaily.lastIndexOf(defaultId)
         // Default metadata for current day for the default option on the list
         var defaultCurrentDate = date[index]
