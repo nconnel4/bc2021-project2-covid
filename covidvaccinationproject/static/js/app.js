@@ -32,7 +32,7 @@ fetch(urlCountry)
 // COVID DATA SECTION
 
 // URL to get daily covid data for each country
-var urlData = `http://127.0.0.1:5000/data/coviddata`
+var urlData = `http://127.0.0.1:5000/data/coviddata?most_recent=1`
 // JSON fetch. File is of every countries data per day
 fetch(urlData)
     .then(response => response.json())
