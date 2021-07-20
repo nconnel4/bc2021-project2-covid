@@ -1,9 +1,9 @@
 .well {
-    width: 275px
+    width: 275px;
 }
 
 .panel {
-    width: 275px
+    width: 275px;
 }
 
 .jumbotron {
@@ -11,4 +11,17 @@
     background-image: url("https://raw.githubusercontent.com/nconnel4/bc2021-project2-covid/develop/covidvaccinationproject/images/covid.png");
     background-color: rgba(255,255,255,0.4);
     background-blend-mode: lighten;
+}
+
+figure {
+    display: inline-block;
+    margin-left: 200px;
+}
+
+figure img {
+    vertical-align: top;
+}
+
+figcaption {
+    text-align: "center";
 }
