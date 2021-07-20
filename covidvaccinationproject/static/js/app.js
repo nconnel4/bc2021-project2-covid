@@ -29,25 +29,6 @@ fetch(urlCountry)
         ele.innerHTML += defaultId + "<br />";
     })
 
-// COUNTRY POPULATION SECTION
-
-// URL to get current population for each country
-var urlPopulation = `http://127.0.0.1:5000/data/countrydemo`
-// JSON fetch. File is of every countries data per day
-fetch(urlPopulation)
-    .then(response => response.json())
-    .then(data => {
-        // Variables
-        countryPopulation = data.map(obj => obj.population)
-        // countryId = data.map(obj => obj.country_id)
-        // Default metadata for the first option on the list
-        var defaultId = document.getElementById("selDataset").value;
-        var defaultPopulation = countryPopulation[countryId.indexOf(defaultId)]; 
-        // Enter data into text box
-        let ele = document.getElementById("sample-metadata");
-        ele.innerHTML += "Population: " + defaultPopulation + "<br />";
-    })
-
 // COVID DATA SECTION
 
 // URL to get daily covid data for each country
@@ -61,7 +42,7 @@ fetch(urlData)
         date = data.map(obj => obj.date)
         totalCases = data.map(obj => obj.total_cases)
         totalDeaths = data.map(obj => obj.total_deaths)
-        totalVaccinations = data.map(obj => obj.total_vaccinations)
+        totalVaccinations = data.map(obj => obj.people_vaccinated)
         // Get last index of default ID
         var defaultId = document.getElementById("selDataset").value;
         index = countryIdDaily.lastIndexOf(defaultId)
@@ -85,8 +66,46 @@ fetch(urlData)
         ele.innerHTML += "Date: " + defaultCurrentDate + "<br />";
         ele.innerHTML += "Covid Cases: " + defaultCurrentCases + "<br />";
         ele.innerHTML += "Total Deaths: " + defaultCurrentDeaths + "<br />";
-        ele.innerHTML += "Total Vaccinations: " + defaultCurrentVaccinations + "<br />";
+        ele.innerHTML += "People Vaccinated: " + defaultCurrentVaccinations + "<br />";
+
+        // COUNTRY POPULATION SECTION
+
+        // URL to get current population for each country
+        var urlPopulation = `http://127.0.0.1:5000/data/countrydemo`
+        // JSON fetch. File is of every countries data per day
+        fetch(urlPopulation)
+            .then(response => response.json())
+            .then(data => {
+                // Variables
+                countryPopulation = data.map(obj => obj.population)
+                countryId = data.map(obj => obj.country_id)
+                // Default metadata for the first option on the list
+                var defaultId = document.getElementById("selDataset").value;
+                var defaultPopulation = countryPopulation[countryId.indexOf(defaultId)]; 
+                // Enter data into text box
+                let ele = document.getElementById("sample-metadata");
+                ele.innerHTML += "Population: " + defaultPopulation + "<br />";
+
+                // Gauge
+                var gaugeData = [{
+                    domain: { x: [0, 1], y: [0, 1] },
+                    value: defaultCurrentVaccinations,
+                    title: "<b>Population Vaccinated:<br />" + 
+                        Number(defaultCurrentVaccinations / defaultPopulation * 100).toFixed(2) + "%</b>",
+                    type: "indicator",
+                    mode: "gauge",
+                gauge: {
+                    axis: { range: [null, defaultPopulation], tickmode: "array" }
+                }
+                }];
+
+                var layout3 = { width: 400, height: 250, margin: { t: 75, b: 10, r: 40 } };
+                Plotly.newPlot('gauge', gaugeData, layout3);
+
+            })
     })
+
+
 
 // COUNTRY SELECTION CHANGED SECTION
 
@@ -126,6 +145,21 @@ function optionChanged(value){
     ele.innerHTML += "Covid Cases: " + currentCases + "<br />";
     ele.innerHTML += "Total Deaths: " + currentDeaths + "<br />";
     ele.innerHTML += "Total Vaccinations: " + currentVaccinations + "<br />";
+    // Gauge
+    var gaugeData = [{
+        domain: { x: [0, 1], y: [0, 1] },
+        value: currentVaccinations,
+        title: "<b>Population Vaccinated:<br />" + 
+            Number(currentVaccinations / currentPopulation * 100).toFixed(2) + "%</b>",
+        type: "indicator",
+        mode: "gauge",
+    gauge: {
+        axis: { range: [null, currentPopulation], tickmode: "array" }
+    }
+    }];
+
+    var layout3 = { width: 500, height: 250, margin: { t: 75, b: 10 } };
+    Plotly.newPlot('gauge', gaugeData, layout3);
 }
 
 // Function to format the date into month/day/year
