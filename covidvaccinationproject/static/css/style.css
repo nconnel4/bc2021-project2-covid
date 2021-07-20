@@ -6,6 +6,15 @@
     width: 275px;
 }
 
+.panel-primary {
+    border-color: black;
+}
+
+.panel-primary>.panel-heading {
+    background-color: #B00202;
+    border-color: black;
+}
+
 .jumbotron {
     overflow: hidden;
     background-image: url("https://raw.githubusercontent.com/nconnel4/bc2021-project2-covid/develop/covidvaccinationproject/images/covid.png");
