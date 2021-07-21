@@ -27,3 +27,4 @@ def test_connect_web_csv():
     data = dc.get_csv_from_web(url)
 
     assert data is not None
+    assert data[0]['location'] == 'Angola'
