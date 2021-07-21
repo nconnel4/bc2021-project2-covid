@@ -22,3 +22,10 @@ def test_covid_data():
 
     assert covid_data[0]['date'] == dt.datetime(2020, 2, 24)
     assert len(covid_data) > 100000
+
+
+def test_variant_data():
+    variant_data = dp.extract_variant_data()
+
+    assert variant_data[0]['country_id'] == 'AGO'
+    assert variant_data[0]['variant'] == 'B.1.160'

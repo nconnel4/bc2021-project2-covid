@@ -94,9 +94,9 @@ function loadDailyCaseChart() {
 
         console.log(mapData)
 
-        var popData = data.filter(point => point.total_cases_per_million > 0).map(point => point.total_cases_per_million);
-        var maxPop = Math.max.apply(null, popData);
-        console.log(popData);
+        // var popData = data.filter(point => point.total_cases_per_million > 0).map(point => point.total_cases_per_million);
+        // var maxPop = Math.max.apply(null, popData);
+        // console.log(popData);
 
 
         console.log()
@@ -142,7 +142,7 @@ function loadDailyCaseChart() {
                     joinBy: ['iso-a3', 'code3'],
                     name: 'New Cases',
                     minSize: 4,
-                    maxSize: '20%',
+                    maxSize: '40%',
                     point: {
                         events: {
                             click: function() {
