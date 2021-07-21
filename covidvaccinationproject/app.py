@@ -12,6 +12,7 @@ from covidvaccinationproject.util.logger import logconfig
 app = Flask(__name__)
 
 
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -65,7 +66,7 @@ def covid_filter():
 
 
 if __name__ == "__main__":
-
-    app.run(debug=True)
     logconfig.setup_logging()
     build_database()
+    app.run(debug=True)
+
