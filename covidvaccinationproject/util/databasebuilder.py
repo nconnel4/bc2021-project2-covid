@@ -113,7 +113,7 @@ def _create_tables(engine):
         'num_sequences_total': Column(Integer)
     }
 
-    variant_data = Table('variant_data', engine, covid_data_schema)
+    variant_data = Table('covid_variant', engine, variant_data_schema)
 
     variant_data.drop_table()
     variant_data.create_table()
@@ -130,10 +130,12 @@ def _load_database(engine):
     covid_data = dataprocessor.extract_covid_data()
     covid.insert_data(covid_data)
 
-    variant = Table('variant_data', engine)
+    variant = Table('covid_variant', engine)
+    variant_data = dataprocessor.extract_variant_data()
+    variant.insert_data(variant_data)
 
 
-async def build_database():
+def build_database():
     conn = _create_database()
     _create_tables(conn.engine)
     _load_database(conn.engine)
