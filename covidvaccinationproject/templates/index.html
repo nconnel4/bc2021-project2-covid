@@ -7,6 +7,13 @@
     <title>Covid Data By Country</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="../static/css/style.css">
+
+    <script src="https://code.highcharts.com/maps/highmaps.js"></script>
+    <script src="https://code.highcharts.com/maps/modules/data.js"></script>
+    <script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/maps/modules/offline-exporting.js"></script>
+    <script src="https://code.highcharts.com/mapdata/custom/world.js"></script>
+    <script src="../static/js/map.js"></script>
 </head>
 
 <body>
@@ -21,6 +28,7 @@
             <p>Data taken from <a href="https://github.com/owid/covid-19-data/tree/master/public/data" target="_blank">Our World In Data's GitHub page for Covid data.</a></p>
           </div>
         </div>
+        <div class="container" id="map-container"></div>
         <!-- Row containing dropdown list and info box -->
         <div class="row">
           <div class="col-md-2">
