@@ -43,9 +43,9 @@ def test_covid_variant():
     covid_variant = webservice.get_variant_data('MEX')
     assert covid_variant[0]['country_id'] == 'MEX'
 
-    covid_data = webservice.get_variant_data(start_date='2020-12-30', end_date='2020-12-31')
+    covid_data = webservice.get_variant_data(start_date='2020-12-20', end_date='2020-12-31')
     assert len(covid_data) > 1
 
-    covid_data = webservice.get_variant_data('MEX', '2020-12-30', '2021-01-04', 1)
-    assert covid_data[0]['date'] == dt.datetime(2021, 1, 3)
+    covid_data = webservice.get_variant_data('MEX', '2020-12-20', '2021-01-05', 1)
+    assert covid_data[0]['date'] == dt.datetime(2021, 1, 4)
 
