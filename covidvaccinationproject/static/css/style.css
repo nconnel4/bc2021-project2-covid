@@ -6,6 +6,18 @@
     width: 275px;
 }
 
+@media (min-width: 992px) {
+    .col-md-2 {
+        width: fit-content;
+    }
+}
+
+@media (min-width: 992px) {
+    .col-md-5 {
+        width: 36.96%;
+    }
+}
+
 .panel-primary {
     border-color: black;
 }
