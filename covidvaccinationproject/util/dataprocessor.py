@@ -122,8 +122,14 @@ def extract_variant_data():
     country_list = webservice.get_country_list()
 
     for row in csv_extract:
+
+        # remove blank rows and replace with 0
+        for key, value in row.items():
+            if key in ['num_sequences', 'perc_sequences', 'num_sequences_total'] and value == '':
+                row[key] = 0
+
         variant_dict = {
-            'date': row['date'],
+            'date': dt.datetime.strptime(row.get('date'), '%Y-%m-%d'),
             'variant': row['variant'],
             'num_sequences': row['num_sequences'],
             'perc_sequences': row['perc_sequences'],
