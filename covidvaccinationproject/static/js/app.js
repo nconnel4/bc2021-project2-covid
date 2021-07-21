@@ -1,109 +1,117 @@
 // COUNTRY NAMES AND ID SECTION
 
 // URL to get dictionary of country codes and country codes
-var urlCountry = 'http://127.0.0.1:5000/data/countrylist'
+function populateDropDown() {
+    var urlCountry = 'http://127.0.0.1:5000/data/countrylist'
 // JSON fetch. File is each country and their corresponding code
-fetch(urlCountry)
-    .then(response => response.json())
-    .then(data => {
-        // Variables
-        countryNames = data.map(obj => obj.country)
-        countryId = data.map(obj => obj.country_id)
-        // Displays the currect selection in the dropdownlist
-        d3.select("#selDataset")
-        .selectAll("myOptions")
-            .data(data)
-        .enter()
-            .append('option')
-            // text showed in the menu
-        .text(function (d) { return d.country; })
-        // corresponding value returned by the button
-        .attr("value", function (d) { return d.country_id; })
+    fetch(urlCountry)
+        .then(response => response.json())
+        .then(data => {
+            // Variables
+            countryNames = data.map(obj => obj.country)
+            countryId = data.map(obj => obj.country_id)
+            // Displays the currect selection in the dropdownlist
+            d3.select("#selDataset")
+                .selectAll("myOptions")
+                .data(data)
+                .enter()
+                .append('option')
+                // text showed in the menu
+                .text(function (d) {
+                    return d.country;
+                })
+                // corresponding value returned by the button
+                .attr("value", function (d) {
+                    return d.country_id;
+                })
 
-        // Default metadata for the first option on the list
-        var defaultId = document.getElementById("selDataset").value;
-        var defaultName = countryNames[countryId.indexOf(defaultId)]; 
-        // Enter data into text box
-        let ele = document.getElementById("sample-metadata");
-        ele.innerHTML += defaultName + "<br />";
-        ele.innerHTML += defaultId + "<br />";
-    })
+            // Default metadata for the first option on the list
+            var defaultId = document.getElementById("selDataset").value;
+            var defaultName = countryNames[countryId.indexOf(defaultId)];
+            // Enter data into text box
+            let ele = document.getElementById("sample-metadata");
+            ele.innerHTML += defaultName + "<br />";
+            ele.innerHTML += defaultId + "<br />";
+        })
+}
 
 // COVID DATA SECTION
 
+function getCovidData(countryId) {
 // URL to get daily covid data for each country
-var urlData = `http://127.0.0.1:5000/data/coviddata?most_recent=1`
+    var urlData = `http://127.0.0.1:5000/data/coviddata?most_recent=1&id=${countryId}`
 // JSON fetch. File is of every countries data per day
-fetch(urlData)
-    .then(response => response.json())
-    .then(data => {
-        // Variables
-        countryIdDaily = data.map(obj => obj.country_id)
-        date = data.map(obj => obj.date)
-        totalCases = data.map(obj => obj.total_cases)
-        totalDeaths = data.map(obj => obj.total_deaths)
-        totalVaccinations = data.map(obj => obj.people_vaccinated)
-        // Get last index of default ID
-        var defaultId = document.getElementById("selDataset").value;
-        index = countryIdDaily.lastIndexOf(defaultId)
-        // Default metadata for current day for the default option on the list
-        var defaultCurrentDate = formatDate(new Date(date[index]))
-        var defaultCurrentCases = totalCases[index]
-        var defaultCurrentDeaths = totalDeaths[index]
-        var defaultCurrentVaccinations = totalVaccinations[index]
-        // Turn any null values to 0
-        if(defaultCurrentCases == null){
-            defaultCurrentCases = 0
-        }
-        if(defaultCurrentDeaths == null){
-            defaultCurrentDeaths = 0
-        }
-        if(defaultCurrentVaccinations == null){
-            defaultCurrentVaccinations = 0
-        }
-        // Enter data into text box
-        let ele = document.getElementById("sample-metadata");
-        ele.innerHTML += "Date: " + defaultCurrentDate + "<br />";
-        ele.innerHTML += "Covid Cases: " + defaultCurrentCases + "<br />";
-        ele.innerHTML += "Total Deaths: " + defaultCurrentDeaths + "<br />";
-        ele.innerHTML += "People Vaccinated: " + defaultCurrentVaccinations + "<br />";
+    fetch(urlData)
+        .then(response => response.json())
+        .then(data => {
+            // Variables
+            countryIdDaily = data.map(obj => obj.country_id)
+            date = data.map(obj => obj.date)
+            totalCases = data.map(obj => obj.total_cases)
+            totalDeaths = data.map(obj => obj.total_deaths)
+            totalVaccinations = data.map(obj => obj.people_vaccinated)
+            // Get last index of default ID
+            var defaultId = document.getElementById("selDataset").value;
+            index = countryIdDaily.lastIndexOf(defaultId)
+            // Default metadata for current day for the default option on the list
+            var defaultCurrentDate = formatDate(new Date(date[index]))
+            var defaultCurrentCases = totalCases[index]
+            var defaultCurrentDeaths = totalDeaths[index]
+            var defaultCurrentVaccinations = totalVaccinations[index]
+            // Turn any null values to 0
+            if (defaultCurrentCases == null) {
+                defaultCurrentCases = 0
+            }
+            if (defaultCurrentDeaths == null) {
+                defaultCurrentDeaths = 0
+            }
+            if (defaultCurrentVaccinations == null) {
+                defaultCurrentVaccinations = 0
+            }
+            // Enter data into text box
+            let ele = document.getElementById("sample-metadata");
+            ele.innerHTML += "Date: " + defaultCurrentDate + "<br />";
+            ele.innerHTML += "Covid Cases: " + defaultCurrentCases + "<br />";
+            ele.innerHTML += "Total Deaths: " + defaultCurrentDeaths + "<br />";
+            ele.innerHTML += "People Vaccinated: " + defaultCurrentVaccinations + "<br />";
 
-        // COUNTRY POPULATION SECTION
+            // COUNTRY POPULATION SECTION
 
-        // URL to get current population for each country
-        var urlPopulation = `http://127.0.0.1:5000/data/countrydemo`
-        // JSON fetch. File is of every countries data per day
-        fetch(urlPopulation)
-            .then(response => response.json())
-            .then(data => {
-                // Variables
-                countryPopulation = data.map(obj => obj.population)
-                countryId = data.map(obj => obj.country_id)
-                // Default metadata for the first option on the list
-                var defaultId = document.getElementById("selDataset").value;
-                var defaultPopulation = countryPopulation[countryId.indexOf(defaultId)]; 
-                // Enter data into text box
-                let ele = document.getElementById("sample-metadata");
-                ele.innerHTML += "Population: " + defaultPopulation + "<br />";
+            // URL to get current population for each country
+            var urlPopulation = `http://127.0.0.1:5000/data/countrydemo?id=${countryId}`
+            // JSON fetch. File is of every countries data per day
+            fetch(urlPopulation)
+                .then(response => response.json())
+                .then(data => {
+                    // Variables
+                    countryPopulation = data.map(obj => obj.population)
+                    countryId = data.map(obj => obj.country_id)
+                    // Default metadata for the first option on the list
+                    var defaultId = document.getElementById("selDataset").value;
+                    var defaultPopulation = countryPopulation[countryId.indexOf(defaultId)];
+                    // Enter data into text box
+                    let ele = document.getElementById("sample-metadata");
+                    ele.innerHTML += "Population: " + defaultPopulation + "<br />";
 
-                // Gauge
-                var gaugeData = [{
-                    domain: { x: [0, 1], y: [0, 1] },
-                    value: defaultCurrentVaccinations,
-                    title: "<b>Population Vaccinated:<br />" + 
-                        Number(defaultCurrentVaccinations / defaultPopulation * 100).toFixed(2) + "%</b>",
-                    type: "indicator",
-                    mode: "gauge",
-                gauge: {
-                    axis: { range: [null, defaultPopulation], tickmode: "array" }
-                }
-                }];
+                    // Gauge
+                    var gaugeData = [{
+                        domain: {x: [0, 1], y: [0, 1]},
+                        value: defaultCurrentVaccinations,
+                        title: "<b>Population Vaccinated:<br />" +
+                            Number(defaultCurrentVaccinations / defaultPopulation * 100).toFixed(2) + "%</b>",
+                        type: "indicator",
+                        mode: "gauge",
+                        gauge: {
+                            axis: {range: [null, defaultPopulation], tickmode: "array"}
+                        }
+                    }];
 
-                var layout3 = { width: 400, height: 250, margin: { t: 75, b: 10, r: 40 } };
-                Plotly.newPlot('gauge', gaugeData, layout3);
+                    var layout3 = {width: 400, height: 250, margin: {t: 75, b: 10, r: 40}};
+                    Plotly.newPlot('gauge', gaugeData, layout3);
 
-            })
-    })
+                })
+        })
+}
 
 
 
@@ -114,52 +122,7 @@ function optionChanged(value){
     // Delete text in box to create new text
     document.getElementById("sample-metadata").innerHTML = "";
     // Get values of data
-    currentId = value;
-    // Get last index of ID
-    var currentId = document.getElementById("selDataset").value;
-    index = countryIdDaily.lastIndexOf(currentId)
-    // Match country name and population to country ID
-    nameMatch = countryNames[countryId.indexOf(currentId)];
-    currentPopulation = countryPopulation[countryId.indexOf(currentId)]
-    // Metadata for current day for the selected option on the list
-    var currentDate = formatDate(new Date(date[index]))
-    var currentCases = totalCases[index]
-    var currentDeaths = totalDeaths[index]
-    var currentVaccinations = totalVaccinations[index]
-    // Turn any null values to 0
-    if(currentCases == null){
-        currentCases = 0
-    }
-    if(currentDeaths == null){
-        currentDeaths = 0
-    }
-    if(currentVaccinations == null){
-        currentVaccinations = 0
-    }
-    // Enter data into text box
-    let ele = document.getElementById("sample-metadata");
-    ele.innerHTML += nameMatch + "<br />";
-    ele.innerHTML += currentId + "<br />";
-    ele.innerHTML += "Population: " + currentPopulation + "<br />";
-    ele.innerHTML += "Date: " + currentDate + "<br />";
-    ele.innerHTML += "Covid Cases: " + currentCases + "<br />";
-    ele.innerHTML += "Total Deaths: " + currentDeaths + "<br />";
-    ele.innerHTML += "Total Vaccinations: " + currentVaccinations + "<br />";
-    // Gauge
-    var gaugeData = [{
-        domain: { x: [0, 1], y: [0, 1] },
-        value: currentVaccinations,
-        title: "<b>Population Vaccinated:<br />" + 
-            Number(currentVaccinations / currentPopulation * 100).toFixed(2) + "%</b>",
-        type: "indicator",
-        mode: "gauge",
-    gauge: {
-        axis: { range: [null, currentPopulation], tickmode: "array" }
-    }
-    }];
-
-    var layout3 = { width: 500, height: 250, margin: { t: 75, b: 10 } };
-    Plotly.newPlot('gauge', gaugeData, layout3);
+    getCovidData(value)
 }
 
 // Function to format the date into month/day/year
@@ -169,3 +132,12 @@ function formatDate(date){
     var day = date.getDate()
     return month + "/" + day + "/" + year
 }
+
+init()
+{
+    populateDropDown();
+    var defaultId = document.getElementById("selDataset").value;
+    optionChanged(defaultId);
+}
+
+init()
