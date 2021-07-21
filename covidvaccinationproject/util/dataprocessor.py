@@ -1,7 +1,7 @@
 import logging
 import datetime as dt
 
-from covidvaccinationproject.util import dataconnector
+from covidvaccinationproject.util import dataconnector, webservice
 
 URL = 'https://covid.ourworldindata.org/data/owid-covid-data.json'
 JSON_DATA = dataconnector.get_json_from_web(URL)
@@ -105,4 +105,42 @@ def extract_covid_data():
     logger.debug(covid_data_list[0])
 
     return covid_data_list
+
+
+def extract_variant_data():
+    """ produces a list of data to insert into variant data pulled from OWID csv file. The location needs to be
+    changed to a country_id """
+
+    logger = logging.getLogger(__name__)
+
+    variant_url = 'https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/variants/covid-variants.csv'
+    csv_extract = dataconnector.get_csv_from_web(variant_url)
+
+    covid_variant_list = []
+    logger.info('Extracting variant data')
+
+    country_list = webservice.get_country_list()
+
+    for row in csv_extract:
+        variant_dict = {
+            'date': row['date'],
+            'variant': row['variant'],
+            'num_sequences': row['num_sequences'],
+            'perc_sequences': row['perc_sequences'],
+            'num_sequences_total': row['num_sequences_total']
+        }
+
+        for country in country_list:
+            if country['country'] == row['location']:
+                variant_dict['country_id'] = country['country_id']
+                break
+
+        covid_variant_list.append(variant_dict)
+
+    logger.debug(covid_variant_list[0])
+
+    return covid_variant_list
+
+
+
 
