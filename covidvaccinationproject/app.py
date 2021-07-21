@@ -83,7 +83,7 @@ def variant_filter():
     if most_recent:
         param_dict['most_recent'] = most_recent
 
-    results = get_covid_data(**param_dict)
+    results = get_variant_data(**param_dict)
 
     return jsonify(results)
 
