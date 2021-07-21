@@ -114,10 +114,7 @@ def _load_database(engine):
     covid.insert_data(covid_data)
 
 
-def build_database():
+async def build_database():
     conn = _create_database()
     _create_tables(conn.engine)
     _load_database(conn.engine)
-
-
-build_database()
