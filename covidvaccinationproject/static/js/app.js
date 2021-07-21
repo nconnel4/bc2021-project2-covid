@@ -129,7 +129,7 @@ function optionChanged(value){
 function formatDate(date){
     var year = date.getFullYear()
     var month = (1 + date.getMonth()).toString()
-    var day = date.getDate()
+    var day = date.getUTCDate()
     return month + "/" + day + "/" + year
 }
 
