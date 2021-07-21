@@ -101,6 +101,23 @@ def _create_tables(engine):
     covid_data.drop_table()
     covid_data.create_table()
 
+    variant_data_schema = {
+        '__tablename__': 'covid_variant',
+        '__table_args__': (PrimaryKeyConstraint('country_id', 'date', 'variant'),
+                           {'extend_existing': True}),
+        'country_id': Column(String),
+        'date': Column(DateTime),
+        'variant': Column(String),
+        'num_sequences': Column(Integer),
+        'perc_sequences': Column(Float),
+        'num_sequences_total': Column(Integer)
+    }
+
+    variant_data = Table('variant_data', engine, covid_data_schema)
+
+    variant_data.drop_table()
+    variant_data.create_table()
+
 
 def _load_database(engine):
 
@@ -112,6 +129,8 @@ def _load_database(engine):
     covid = Table('covid_data', engine)
     covid_data = dataprocessor.extract_covid_data()
     covid.insert_data(covid_data)
+
+    variant = Table('variant_data', engine)
 
 
 async def build_database():
