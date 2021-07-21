@@ -142,7 +142,7 @@ function loadDailyCaseChart() {
                     joinBy: ['iso-a3', 'code3'],
                     name: 'New Cases',
                     minSize: 4,
-                    maxSize: '20%',
+                    maxSize: '40%',
                     point: {
                         events: {
                             click: function() {
