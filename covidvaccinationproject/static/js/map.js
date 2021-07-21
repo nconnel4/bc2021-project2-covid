@@ -100,7 +100,7 @@ function loadDailyCaseChart() {
 
 
         console.log()
-        Highcharts.mapChart('container2', {
+        Highcharts.mapChart('map-container', {
             chart: {
                 borderWidth: 1,
                 map: 'custom/world'
@@ -142,14 +142,22 @@ function loadDailyCaseChart() {
                     joinBy: ['iso-a3', 'code3'],
                     name: 'New Cases',
                     minSize: 4,
-                    maxSize: '20%'
+                    maxSize: '20%',
+                    point: {
+                        events: {
+                            click: function() {
+                                document.getElementById("selDataset").value = this.code3
+                                optionChanged(this.code3)
+                            }
+                        }
+                    }
                 }]
         })
     })
 }
 
 function init() {
-    loadPopulationChart()
+    // loadPopulationChart()
     loadDailyCaseChart()
 }
 
