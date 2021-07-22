@@ -179,7 +179,7 @@ function getCovidTimeGraphs(countryId) {
                 height: 600,
                 width: 900,
                 showlegend: true,
-                legend: { xanchor: 'center', x: 0.5, orientation: 'h' }
+                legend: {xanchor: 'center', x: 0.5, orientation: 'h'}
             }
 
             Plotly.newPlot('caseGraph', trace, layout);
@@ -192,7 +192,9 @@ function getVariantData(countryId) {
     fetch(url)
         .then(response => response.json())
         .then(data => {
-                console.log(data)
+                console.log(data);
+
+                data = data.filter(obj => obj.variant != "non_who");
 
                 var variantData = data.map(({variant, num_sequences, perc_sequences}) => ({
                     'Variant': variant,
@@ -206,69 +208,72 @@ function getVariantData(countryId) {
                 console.log(variantData)
                 if (data.length == 0) {
                     subHeader.text("No variant statistics available for country")
-                }
-                else {
+                } else {
                     var date = formatDate(new Date(data.map(obj => obj.date)[0]))
                     subHeader.text(`Variant Data Observation Date ${date}`)
                         .style("margin-left", "10px")
                 }
 
 
-            		  var sortAscending = true;
+                var sortAscending = true;
                 d3.select("#variant-table").selectAll("table").remove()
-		  var table = d3.select('#variant-table').append('table').attr("id", "variant-table");
-		  var titles = d3.keys(variantData[0]);
-		  var headers = table.append('thead').append('tr')
-		                   .selectAll('th')
-		                   .data(titles).enter()
-		                   .append('th')
-		                   .text(function (d) {
-			                    return d;
-		                    })
-		                   .on('click', function (d) {
-		                	   headers.attr('class', 'header');
+                var table = d3.select('#variant-table').append('table').attr("id", "variant-table");
+                var titles = d3.keys(variantData[0]);
+                var headers = table.append('thead').append('tr')
+                    .selectAll('th')
+                    .data(titles).enter()
+                    .append('th')
+                    .text(function (d) {
+                        return d;
+                    })
+                    .on('click', function (d) {
+                        headers.attr('class', 'header');
 
-		                	   if (sortAscending) {
-		                	     rows.sort(function(a, b) { return b[d] < a[d]; });
-		                	     sortAscending = false;
-		                	     this.className = 'aes';
-		                	   } else {
-		                		 rows.sort(function(a, b) { return b[d] > a[d]; });
-		                		 sortAscending = true;
-		                		 this.className = 'des';
-		                	   }
+                        if (sortAscending) {
+                            rows.sort(function (a, b) {
+                                return b[d] < a[d];
+                            });
+                            sortAscending = false;
+                            this.className = 'aes';
+                        } else {
+                            rows.sort(function (a, b) {
+                                return b[d] > a[d];
+                            });
+                            sortAscending = true;
+                            this.className = 'des';
+                        }
 
-		                   });
+                    });
 
-		  var rows = table.append('tbody').selectAll('tr')
-		               .data(variantData).enter()
-		               .append('tr');
-		  rows.selectAll('td')
-		    .data(function (d) {
-		    	return titles.map(function (k) {
-		    		return { 'value': d[k], 'name': k};
-		    	});
-		    }).enter()
-		    .append('td')
-		    .attr('data-th', function (d) {
-		    	return d.name;
-		    })
-		    .text(function (d) {
-		    	return d.value;
-		    });
+                var rows = table.append('tbody').selectAll('tr')
+                    .data(variantData).enter()
+                    .append('tr');
+                rows.selectAll('td')
+                    .data(function (d) {
+                        return titles.map(function (k) {
+                            return {'value': d[k], 'name': k};
+                        });
+                    }).enter()
+                    .append('td')
+                    .attr('data-th', function (d) {
+                        return d.name;
+                    })
+                    .text(function (d) {
+                        return d.value;
+                    });
 
-		  var data = [{
-		      values: data.filter(obj => obj.num_sequences > 0).map(obj => obj.num_sequences),
-              labels: data.filter(obj => obj.num_sequences > 0).map(obj => obj.variant),
-              type: "pie"
-          }];
+                var data = [{
+                    values: data.filter(obj => obj.num_sequences > 0).map(obj => obj.num_sequences),
+                    labels: data.filter(obj => obj.num_sequences > 0).map(obj => obj.variant),
+                    type: "pie"
+                }];
 
-		  var layout = {
-		      height: 600,
-              width: 600
-          }
+                var layout = {
+                    height: 600,
+                    width: 600
+                }
 
-            Plotly.newPlot("variant-pie", data, layout)
+                Plotly.newPlot("variant-pie", data, layout)
 
             }
         )
