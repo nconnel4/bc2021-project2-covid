@@ -51,10 +51,6 @@ figcaption {
     overflow: visible
 }
 
-.js-plotly-plot .plotly .main-svg .bar .legend {
-    transform: translate(100px, 100px)
-}
-
 #map-container {
     margin-bottom: 10px;
 }
@@ -101,4 +97,8 @@ td, th {
     padding: 6px;
     border: 1px solid #ccc;
     text-align: left;
+}
+
+#variant-header {
+    border-bottom: black solid 5px;
 }
