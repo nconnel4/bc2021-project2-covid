@@ -147,10 +147,7 @@ function getCovidTimeGraphs(countryId) {
                 y: totalDeathsY,
                 yaxis: 'y2',
                 name: "Covid Deaths",
-                type: 'scatter',
-                line: {
-                    color: 'rgb(176, 2, 2)'
-                }
+                type: 'scatter'
             }
 
             trace = [dataCases, dataDeath]
