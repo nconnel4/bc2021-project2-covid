@@ -17,9 +17,6 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
-@app.route('/map')
-def maps():
-    return render_template('map.html')
 
 @app.route('/data/countrylist', methods=['GET'])
 def country_list():
