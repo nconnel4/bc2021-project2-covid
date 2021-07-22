@@ -103,7 +103,7 @@ function loadDailyCaseChart() {
         Highcharts.mapChart('map-container', {
             chart: {
                 borderWidth: 1,
-                map: 'custom/world'
+                map: 'custom/world',
             },
 
             title: {
@@ -155,10 +155,3 @@ function loadDailyCaseChart() {
         })
     })
 }
-
-function init() {
-    // loadPopulationChart()
-    loadDailyCaseChart()
-}
-
-init()
