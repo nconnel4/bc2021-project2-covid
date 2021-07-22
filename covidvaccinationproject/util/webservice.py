@@ -193,7 +193,7 @@ def get_variant_data(country_id=None, start_date=None, end_date=None, most_recen
             'num_sequences_total': data_point[5]
         })
 
-    logger.debug(variant_data_list[0])
+    logger.debug(variant_data_list)
 
     session.close()
 
