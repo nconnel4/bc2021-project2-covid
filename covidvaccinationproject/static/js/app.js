@@ -147,7 +147,10 @@ function getCovidTimeGraphs(countryId) {
                 y: totalDeathsY,
                 yaxis: 'y2',
                 name: "Covid Deaths",
-                type: 'scatter'
+                type: 'scatter',
+                line: {
+                    color: 'rgb(176, 2, 2)'
+                }
             }
 
             trace = [dataCases, dataDeath]
@@ -160,7 +163,10 @@ function getCovidTimeGraphs(countryId) {
                     range: [0, y1_max]
                 },
                 yaxis2: {
-                    title: "Covid Deaths",
+                    title: {
+                        text: "Covid Deaths",
+                        standoff: 60
+                    },
                     overlaying: "y",
                     range: [0, y2_max],
                     side: "right"
