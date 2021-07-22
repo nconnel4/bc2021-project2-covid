@@ -22,7 +22,7 @@
     border-color: black;
 }
 
-.panel-primary>.panel-heading {
+.panel-primary > .panel-heading {
     background-color: #B00202;
     border-color: black;
 }
@@ -30,7 +30,7 @@
 .jumbotron {
     overflow: hidden;
     background-image: url("https://raw.githubusercontent.com/nconnel4/bc2021-project2-covid/develop/covidvaccinationproject/images/covid.png");
-    background-color: rgba(255,255,255,0.4);
+    background-color: rgba(255, 255, 255, 0.4);
     background-blend-mode: lighten;
 }
 
@@ -45,4 +45,60 @@ figure img {
 
 figcaption {
     text-align: "center";
+}
+
+.js-plotly-plot .plotly .main-svg {
+    overflow: visible
+}
+
+.js-plotly-plot .plotly .main-svg .bar .legend {
+    transform: translate(100px, 100px)
+}
+
+#map-container {
+    margin-bottom: 10px;
+}
+
+#infoBox {
+    width: 300px;
+}
+
+#caseGraph {
+    height: 400px;
+    top: -500px;
+}
+
+/*#caseGraph {*/
+/*    height: 600px;*/
+/*    width: 800px;*/
+/*}*/
+
+#variant {
+    margin-top: 50px;
+    margin-left: 15px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* Zebra striping */
+tr:nth-of-type(odd) {
+    background: #eee;
+}
+
+th {
+    background: #333;
+    color: white;
+    font-weight: bold;
+    cursor: s-resize;
+    background-repeat: no-repeat;
+    background-position: 3% center;
+}
+
+td, th {
+    padding: 6px;
+    border: 1px solid #ccc;
+    text-align: left;
 }

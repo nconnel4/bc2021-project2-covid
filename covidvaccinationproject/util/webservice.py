@@ -154,3 +154,47 @@ def get_covid_data(country_id=None, start_date=None, end_date=None, most_recent=
     session.close()
 
     return covid_data_list
+
+
+def get_variant_data(country_id=None, start_date=None, end_date=None, most_recent=None):
+    logger = logging.getLogger(__name__)
+
+    conn = SqlConnector('covid.db')
+    variant_data_list = []
+
+    variant_table = Table('covid_variant', conn.engine)
+
+    Sesssion = sessionmaker(bind=conn.engine)
+    session = Sesssion()
+
+    query = session.query(variant_table.table)
+
+    if country_id:
+        query = query.filter(variant_table.table.c.country_id == country_id)
+    if start_date:
+        query = query.filter(variant_table.table.c.date >= start_date)
+    if end_date:
+        query = query.filter(variant_table.table.c.date <= end_date)
+
+    if most_recent:
+        sub_query = query.add_columns(func.max(variant_table.table.c.date).label('most_recent_date')). \
+            group_by(variant_table.table.c.country_id).subquery()
+
+        query = query.join(sub_query, and_(variant_table.table.c.date == sub_query.c.most_recent_date,
+                                           variant_table.table.c.country_id == sub_query.c.country_id))
+
+    for data_point in query:
+        variant_data_list.append({
+            'country_id': data_point[0],
+            'date': data_point[1],
+            'variant': data_point[2],
+            'num_sequences': data_point[3],
+            'perc_sequences': data_point[4],
+            'num_sequences_total': data_point[5]
+        })
+
+    logger.debug(variant_data_list)
+
+    session.close()
+
+    return variant_data_list

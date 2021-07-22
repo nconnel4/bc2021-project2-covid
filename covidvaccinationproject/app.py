@@ -4,12 +4,13 @@ import sys
 sys.path.append("..")
 
 from covidvaccinationproject.util.databasebuilder import build_database
-from covidvaccinationproject.util.webservice import get_country_list, get_country_demographics, get_covid_data
+from covidvaccinationproject.util.webservice import get_country_list, get_country_demographics, get_covid_data, get_variant_data
 from covidvaccinationproject.util.sqlconnector import SqlConnector
 
 from covidvaccinationproject.util.logger import logconfig
 
 app = Flask(__name__)
+
 
 
 @app.route('/')
@@ -63,9 +64,32 @@ def covid_filter():
 
     return jsonify(results)
 
+@app.route('/data/variantdata', methods=['GET'])
+def variant_filter():
+    query_parameters = request.args
+    param_dict = {}
+
+    country_id = query_parameters.get('id')
+    start_date = query_parameters.get('start_date')
+    end_date = query_parameters.get('end_date')
+    most_recent = query_parameters.get('most_recent')
+
+    if country_id:
+        param_dict['country_id'] = country_id
+    if start_date:
+        param_dict['start_date'] = start_date
+    if end_date:
+        param_dict['end_date'] = end_date
+    if most_recent:
+        param_dict['most_recent'] = most_recent
+
+    results = get_variant_data(**param_dict)
+
+    return jsonify(results)
+
 
 if __name__ == "__main__":
-
-    app.run(debug=True)
     logconfig.setup_logging()
     build_database()
+    app.run(debug=True)
+

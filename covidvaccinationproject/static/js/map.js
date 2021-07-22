@@ -94,16 +94,16 @@ function loadDailyCaseChart() {
 
         console.log(mapData)
 
-        var popData = data.filter(point => point.total_cases_per_million > 0).map(point => point.total_cases_per_million);
-        var maxPop = Math.max.apply(null, popData);
-        console.log(popData);
+        // var popData = data.filter(point => point.total_cases_per_million > 0).map(point => point.total_cases_per_million);
+        // var maxPop = Math.max.apply(null, popData);
+        // console.log(popData);
 
 
         console.log()
-        Highcharts.mapChart('container2', {
+        Highcharts.mapChart('map-container', {
             chart: {
                 borderWidth: 1,
-                map: 'custom/world'
+                map: 'custom/world',
             },
 
             title: {
@@ -142,15 +142,16 @@ function loadDailyCaseChart() {
                     joinBy: ['iso-a3', 'code3'],
                     name: 'New Cases',
                     minSize: 4,
-                    maxSize: '20%'
+                    maxSize: '40%',
+                    point: {
+                        events: {
+                            click: function() {
+                                document.getElementById("selDataset").value = this.code3
+                                optionChanged(this.code3)
+                            }
+                        }
+                    }
                 }]
         })
     })
 }
-
-function init() {
-    loadPopulationChart()
-    loadDailyCaseChart()
-}
-
-init()
