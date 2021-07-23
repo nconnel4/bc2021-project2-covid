@@ -2,6 +2,7 @@
 ## Interactive Dashboard
 
 An interactive website that takes the latest Covid data for 209 countries, using JSON files from https://github.com/owid/covid-19-data/tree/master/public/data.
+
 An SQL database is created that imports the JSON files.
 An HTML file under the /map folder opens a browser window that displays a heatmap for Covid data.
 
