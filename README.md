@@ -8,7 +8,7 @@ An HTML file under the /map folder opens a browser window that displays a heatma
 
 
 ## How to use
-From a terminal window (such as GitBash), the Flask app file must first be run using > python app.py
+From a terminal window (such as GitBash), navigate to the covidvaccinations folder, and the Flask app file must first be run using > python app.py
 
 On a browser window, enter http://127.0.0.1:5000/
 
