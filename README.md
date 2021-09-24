@@ -14,6 +14,8 @@ On a browser window, enter http://127.0.0.1:5000/
 
 From either the dropdown list or the bubble map on the site, select or type a country to get the data and charts updated for that selection.
 
+It can also be accessed as a standalone website: https://covid-data-site.herokuapp.com/
+
 ## Data shown on webpage
 **For the selected country, the following info is diplayed:**
 
